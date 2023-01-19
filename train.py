@@ -119,14 +119,6 @@ def train_model(
                 division_step = (n_train // (5 * batch_size))
                 if division_step > 0:
                     if global_step % division_step == 0:
-                        histograms = {}
-                        for tag, value in model.named_parameters():
-                            tag = tag.replace('/', '.')
-                            if not torch.isinf(value).any():
-                                histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
-                            if not torch.isinf(value.grad).any():
-                                histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
-
                         val_score = evaluate(model, val_loader, device, amp)
                         scheduler.step(val_score)
 
