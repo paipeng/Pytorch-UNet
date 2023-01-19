@@ -199,7 +199,7 @@ if __name__ == '__main__':
                       'Enabling checkpointing to reduce memory usage, but this slows down training. '
                       'Consider enabling AMP (--amp) for fast and memory efficient training')
         torch.cuda.empty_cache()
-        model.use_checkpointing()
+        #model.use_checkpointing()
         train_model(
             model=model,
             epochs=args.epochs,
