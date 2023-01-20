@@ -18,8 +18,6 @@ from unet import UNet
 from utils.data_loading import BasicDataset, CarvanaDataset
 from utils.dice_score import dice_loss
 
-dir_img = Path('./data/imgs/')
-dir_mask = Path('./data/masks/')
 dir_checkpoint = Path('./checkpoints/')
 
 
@@ -146,12 +144,17 @@ def get_args():
     parser.add_argument('--amp', action='store_true', default=False, help='Use mixed precision')
     parser.add_argument('--bilinear', action='store_true', default=False, help='Use bilinear upsampling')
     parser.add_argument('--classes', '-c', type=int, default=2, help='Number of classes')
+    parser.add_argument('-i', '--input', metavar='I', type=str, required=False, default='./data/imgs/', help='image folder path')
+    parser.add_argument('-m', '--mask', metavar='M', type=str, required=False, default='./data/masks/', help='mask folder')
 
     return parser.parse_args()
 
 
 if __name__ == '__main__':
     args = get_args()
+
+    dir_img = args.input
+    dir_mask = args.mask
 
     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
